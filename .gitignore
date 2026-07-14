@@ -12,3 +12,4 @@ Thumbs.db
 *.log
 
 next-env.d.ts
+*.tsbuildinfo
