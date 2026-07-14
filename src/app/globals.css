@@ -7,8 +7,10 @@
   --color-border: #232a36;
   --color-foreground: #f2f5f8;
   --color-muted: #8892a0;
+  --color-primary: #34d399;
+  --color-primary-dim: #0f9d67;
+  --color-violet: #8b5cf6;
   --color-ice: #6ec9f2;
-  --color-ice-dim: #3d7a99;
   --color-danger: #ef4444;
   --color-success: #22c55e;
 
@@ -26,8 +28,27 @@ body {
 }
 
 ::selection {
-  background: var(--color-ice);
+  background: var(--color-primary);
   color: var(--color-background);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-foreground), var(--color-primary) 55%, var(--color-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(242, 245, 248, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 245, 248, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
 }
 
 @media (prefers-reduced-motion: reduce) {

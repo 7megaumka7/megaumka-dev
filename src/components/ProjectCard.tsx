@@ -6,12 +6,12 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group block rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-ice-dim"
+      className="group block rounded-2xl border border-border bg-surface/70 p-4 backdrop-blur-sm transition-colors hover:border-primary-dim hover:bg-surface"
     >
       <ProjectVisual project={project} />
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-foreground group-hover:text-ice">
+          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary">
             {project.title}
           </h3>
           <p className="mt-1 text-sm text-muted">{project.tagline}</p>

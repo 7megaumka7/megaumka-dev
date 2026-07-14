@@ -13,7 +13,7 @@ export function Header() {
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="flex items-center gap-2.5 text-foreground transition-colors hover:text-ice"
+          className="flex items-center gap-2.5 text-foreground transition-colors hover:text-primary"
         >
           <BearLogo className="h-8 w-8 text-foreground" />
           <span className="text-lg font-semibold tracking-tight">umka.dev</span>

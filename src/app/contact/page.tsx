@@ -19,7 +19,7 @@ export default function ContactPage() {
       </p>
       <a
         href={`mailto:${CONTACT_EMAIL}`}
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-ice px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+        className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
       >
         {CONTACT_EMAIL}
       </a>

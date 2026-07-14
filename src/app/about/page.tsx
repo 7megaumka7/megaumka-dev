@@ -31,7 +31,7 @@ export default function AboutPage() {
         </p>
         <p>
           На странице{" "}
-          <a href="/projects" className="text-ice hover:underline">
+          <a href="/projects" className="text-primary hover:underline">
             проектов
           </a>{" "}
           — один рабочий проект и три концепт-кейса, каждый честно помечен,

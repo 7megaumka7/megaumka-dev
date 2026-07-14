@@ -14,7 +14,7 @@ export default function Error({ reset }: { error: Error; reset: () => void }) {
       <p className="text-muted">Уже разбираюсь. Попробуйте ещё раз.</p>
       <button
         onClick={() => reset()}
-        className="mt-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-ice-dim"
+        className="mt-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim"
       >
         Попробовать снова
       </button>
