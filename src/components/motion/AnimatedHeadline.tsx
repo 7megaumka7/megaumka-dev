@@ -15,12 +15,27 @@ const word: Variants = {
 export function AnimatedHeadline({
   text,
   className,
+  highlightWord,
 }: {
   text: string;
   className?: string;
+  highlightWord?: string;
 }) {
   const reduce = useReducedMotion();
   const words = text.split(" ");
+
+  function renderWord(w: string) {
+    if (!highlightWord) return w;
+    const stripped = w.replace(/[.,!?]+$/, "");
+    if (stripped.toLowerCase() !== highlightWord.toLowerCase()) return w;
+    const trail = w.slice(stripped.length);
+    return (
+      <>
+        <span className="text-violet">{stripped}</span>
+        {trail}
+      </>
+    );
+  }
 
   if (reduce) {
     return <h1 className={className}>{text}</h1>;
@@ -38,7 +53,7 @@ export function AnimatedHeadline({
       {words.map((w, i) => (
         <span key={i} className="inline-block overflow-hidden pb-1 align-bottom">
           <motion.span className="inline-block" variants={word}>
-            {w}
+            {renderWord(w)}
             {i < words.length - 1 ? " " : ""}
           </motion.span>
         </span>

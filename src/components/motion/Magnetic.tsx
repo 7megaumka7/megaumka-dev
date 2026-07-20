@@ -9,7 +9,7 @@ import {
 import { type PointerEvent, type ReactNode, useRef } from "react";
 
 /**
- * Cursor-attracted wrapper. Desktop pointer only — touch has no hover concept,
+ * Cursor-attracted wrapper. Desktop pointer only - touch has no hover concept,
  * so it's a plain wrapper there. Respects prefers-reduced-motion.
  */
 export function Magnetic({

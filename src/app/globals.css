@@ -1,42 +1,64 @@
 @import "tailwindcss";
 
+/*
+ * Palette + type scale ported from Downloads/stitch_export (Stitch design
+ * "Offensive Elegance" - soft-minimalism, warm-neutral light surface, sage
+ * primary / blush secondary). Token names kept stable so components didn't
+ * need renaming, only re-pointing to the new values.
+ */
 @theme {
-  --color-background: #0a0e14;
-  --color-surface: #10151d;
-  --color-surface-2: #161c26;
-  --color-border: #232a36;
-  --color-foreground: #f2f5f8;
-  --color-muted: #8892a0;
-  --color-primary: #34d399;
-  --color-primary-dim: #0f9d67;
-  --color-violet: #8b5cf6;
+  --color-background: #f9f9f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f4f2;
+  --color-border: #dfe1db;
+  --color-foreground: #1a1c1b;
+  --color-muted: #5c6058;
+  --color-primary: #49663f;
+  --color-primary-dim: #395530;
+  --color-primary-tint: #e3ecdd;
+  --color-violet: #78555d;
+  --color-violet-tint: #f4e3e6;
   --color-ice: #6ec9f2;
-  --color-danger: #ef4444;
-  --color-success: #22c55e;
+  --color-danger: #ba1a1a;
+  --color-danger-tint: #ffdad6;
+  --color-success: #395530;
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "Cascadia Code", monospace;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
-html {
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
   color-scheme: dark;
+  --color-background: #16181a;
+  --color-surface: #1e2124;
+  --color-surface-2: #24272a;
+  --color-border: #33373a;
+  --color-foreground: #f2f2ef;
+  --color-muted: #a3a89e;
+  --color-primary: #8fbb7c;
+  --color-primary-dim: #6f9a5d;
+  --color-primary-tint: #26301f;
+  --color-violet: #d19aa3;
+  --color-violet-tint: #33262a;
+  --color-ice: #6ec9f2;
+  --color-danger: #ff8f87;
+  --color-danger-tint: #3a1f1d;
+  --color-success: #8fbb7c;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 ::selection {
-  background: var(--color-primary);
-  color: var(--color-background);
-}
-
-.text-gradient {
-  background: linear-gradient(120deg, var(--color-foreground), var(--color-primary) 55%, var(--color-violet));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background: var(--color-primary-tint);
+  color: var(--color-primary-dim);
 }
 
 .bg-grid {
@@ -45,9 +67,9 @@ body {
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(242, 245, 248, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(242, 245, 248, 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(to right, rgba(73, 102, 63, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(73, 102, 63, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
 }
 

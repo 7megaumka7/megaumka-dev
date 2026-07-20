@@ -4,7 +4,7 @@ type BearLogoProps = {
 };
 
 /**
- * Minimalist geometric polar bear mark — built from circles only, no external
+ * Minimalist geometric polar bear mark - built from circles only, no external
  * asset/generation service. White fill reads on the dark Arctic theme; the
  * viewBox is square so it drops cleanly into favicons and nav slots.
  */

@@ -1,32 +1,85 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { SiteChrome } from "@/components/SiteChrome";
 import { Spotlight } from "@/components/motion/Spotlight";
+import { ThemeProvider, themeAntiFlashScript } from "@/components/ThemeProvider";
+import { I18nProvider } from "@/lib/i18n/I18nProvider";
+
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "cyrillic"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
+const SITE_URL = "https://megaumka.dev";
+const TITLE = "megaumka.dev: веб-разработка и security-first подход";
+const DESCRIPTION =
+  "megaumka.dev: команда фуллстек-разработчиков и пентестеров с сертификатом OSCP из Астаны. Строим сайты с аудитом безопасности: лендинг, каталог, SaaS. Рабочий e-commerce проект и пять живых demo-лендингов на реальном коде, скриншоты сняты с работающих страниц.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://umka.dev"),
-  title: {
-    default: "umka.dev — веб-разработка и security-first подход",
-    template: "%s — umka.dev",
+  metadataBase: new URL(SITE_URL),
+  title: { default: TITLE, template: "%s | megaumka.dev" },
+  description: DESCRIPTION,
+  keywords: [
+    "заказать сайт",
+    "разработка сайтов Астана",
+    "создать сайт",
+    "веб-разработка Казахстан",
+    "аудит безопасности сайта",
+    "пентест сайта",
+    "Next.js разработка",
+    "сайт с нуля",
+  ],
+  authors: [{ name: "megaumka.dev" }],
+  alternates: { canonical: SITE_URL },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "megaumka.dev",
+    title: TITLE,
+    description: DESCRIPTION,
+    locale: "ru_RU",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
-  description:
-    "Портфолио: пентестер (OSCP) и веб-разработчик. Проекты — от рабочего e-commerce до концептов с разбором безопасности.",
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "megaumka.dev",
+  url: SITE_URL,
+  description: DESCRIPTION,
+  address: { "@type": "PostalAddress", addressLocality: "Астана", addressCountry: "KZ" },
+  areaServed: ["KZ", "Almaty", "Astana"],
+  knowsAbout: ["веб-разработка", "аудит безопасности", "пентест", "Next.js", "UI/UX дизайн"],
+  sameAs: [] as string[],
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeAntiFlashScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased">
-        <div className="bg-grid" />
-        <Spotlight />
-        <div className="relative z-10 flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <ThemeProvider>
+          <I18nProvider>
+            <div className="bg-grid" />
+            <Spotlight />
+            <SiteChrome>{children}</SiteChrome>
+          </I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

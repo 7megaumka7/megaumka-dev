@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 
 /**
  * Cursor-tracked radial glow, fixed behind content. Plain CSS-var + rAF-throttled
- * pointermove — no spring physics needed for a soft background blob, keeps it cheap.
+ * pointermove - no spring physics needed for a soft background blob, keeps it cheap.
  */
 export function Spotlight() {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,7 +41,7 @@ export function Spotlight() {
       className="pointer-events-none fixed inset-0 z-0"
       style={{
         background:
-          "radial-gradient(600px circle at var(--x, 50%) var(--y, 15%), rgba(52,211,153,0.14), transparent 60%)",
+          "radial-gradient(600px circle at var(--x, 50%) var(--y, 15%), rgba(73,102,63,0.08), transparent 60%)",
       }}
     />
   );

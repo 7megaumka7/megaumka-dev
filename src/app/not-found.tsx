@@ -11,7 +11,7 @@ export default function NotFound() {
       <p className="text-muted">Медведь тут не пробегал. Проверьте адрес.</p>
       <Link
         href="/"
-        className="mt-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim"
+        className="mt-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim"
       >
         На главную
       </Link>
