@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { BearLogo } from "./BearLogo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
@@ -13,7 +14,18 @@ type SectionId = (typeof SECTION_IDS)[number];
 export function FloatingNav() {
   const t = useT();
   const [active, setActive] = useState<SectionId>("hero");
+  const [mobileOpen, setMobileOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setMobileOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileOpen]);
 
   useEffect(() => {
     const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
@@ -37,6 +49,7 @@ export function FloatingNav() {
 
   function goTo(id: SectionId) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMobileOpen(false);
   }
 
   const links: { id: SectionId; label: string }[] = [
@@ -49,7 +62,7 @@ export function FloatingNav() {
   ];
 
   return (
-    <header className="fixed inset-x-0 top-4 z-40 flex justify-center px-4">
+    <header className="fixed inset-x-0 top-4 z-40 flex flex-col items-center px-4">
       <div className="flex w-full max-w-4xl items-center gap-2 rounded-full border border-border/80 bg-background/85 px-3 py-2 shadow-sm backdrop-blur">
         <button
           type="button"
@@ -91,12 +104,65 @@ export function FloatingNav() {
         </nav>
         <div className="flex-1 lg:hidden" />
 
-
         <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-expanded={mobileOpen}
+            aria-label={t.nav.menu}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-foreground transition-colors hover:bg-primary-tint hover:text-primary lg:hidden"
+          >
+            <MenuIcon open={mobileOpen} />
+          </button>
           <LanguageSwitcher />
           <ThemeToggle />
         </div>
       </div>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.nav
+            initial={reduce ? { opacity: 1 } : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 1 } : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+            className="mt-2 flex w-full max-w-4xl flex-col gap-1 rounded-2xl border border-border/80 bg-background/95 p-2 text-sm shadow-sm backdrop-blur lg:hidden"
+          >
+            {links.map((l) => (
+              <button
+                key={l.id}
+                type="button"
+                onClick={() => goTo(l.id)}
+                aria-current={active === l.id ? "true" : undefined}
+                className={`rounded-lg px-3 py-2 text-left transition-colors ${
+                  active === l.id ? "bg-primary-tint text-primary" : "text-muted hover:bg-primary-tint/50 hover:text-foreground"
+                }`}
+              >
+                {l.label}
+              </button>
+            ))}
+            <Link
+              href="/blog"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2 text-left text-muted transition-colors hover:bg-violet-tint hover:text-violet"
+            >
+              {t.nav.blog}
+            </Link>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
+  );
+}
+
+function MenuIcon({ open }: { open: boolean }) {
+  return (
+    <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+      {open ? (
+        <path d="M5 5l10 10M15 5L5 15" />
+      ) : (
+        <path d="M3 6h14M3 10h14M3 14h14" />
+      )}
+    </svg>
   );
 }

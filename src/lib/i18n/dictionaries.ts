@@ -11,6 +11,7 @@ export type Dictionary = {
     about: string;
     contact: string;
     blog: string;
+    menu: string;
   };
   hero: {
     badge: string;
@@ -107,7 +108,7 @@ export type Dictionary = {
 
 export const dictionaries: Record<Locale, Dictionary> = {
   ru: {
-    nav: { projects: "Проекты", services: "Услуги", faq: "Вопросы", team: "Команда", about: "О студии", contact: "Контакты", blog: "Блог" },
+    nav: { projects: "Проекты", services: "Услуги", faq: "Вопросы", team: "Команда", about: "О студии", contact: "Контакты", blog: "Блог", menu: "Меню" },
     hero: {
       badge: "OSCP · security-first разработка",
       headline: "Строим современные сайты, которые еще и выдержат аудит.",
@@ -192,7 +193,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     language: { label: "Язык" },
   },
   kz: {
-    nav: { projects: "Жобалар", services: "Қызметтер", faq: "Сұрақтар", team: "Команда", about: "Студия туралы", contact: "Байланыс", blog: "Блог" },
+    nav: { projects: "Жобалар", services: "Қызметтер", faq: "Сұрақтар", team: "Команда", about: "Студия туралы", contact: "Байланыс", blog: "Блог", menu: "Мәзір" },
     hero: {
       badge: "OSCP · security-first әзірлеу",
       headline: "Аудиттен өтетін заманауи сайттар жасаймыз.",
@@ -277,7 +278,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     language: { label: "Тіл" },
   },
   en: {
-    nav: { projects: "Projects", services: "Services", faq: "FAQ", team: "Team", about: "Studio", contact: "Contact", blog: "Blog" },
+    nav: { projects: "Projects", services: "Services", faq: "FAQ", team: "Team", about: "Studio", contact: "Contact", blog: "Blog", menu: "Menu" },
     hero: {
       badge: "OSCP · security-first development",
       headline: "We build modern sites that can survive an audit.",
