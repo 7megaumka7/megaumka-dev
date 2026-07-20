@@ -6,9 +6,8 @@ import { useT } from "@/lib/i18n/I18nProvider";
 
 const CONTACT_EMAIL = "info@megaumka.dev";
 const TELEGRAM_USERNAME = "megaumka_dev_bot";
-// TODO(owner): replace with the studio's real WhatsApp number (digits only, no +).
-// The button renders only when a number is set - no risk of messaging a stranger.
-const WHATSAPP_NUMBER = "";
+const WHATSAPP_NUMBER = "77772681549";
+const WHATSAPP_MESSAGE = "Здравствуйте! Пишу по поводу услуг студии дизайна сайтов megaumka.dev";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -144,12 +143,12 @@ export function Contact() {
         </a>
         {WHATSAPP_NUMBER && (
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#1ebe5a]"
           >
-            <WhatsAppIcon className="h-4 w-4 text-primary" />
+            <WhatsAppIcon className="h-4 w-4 text-white" />
             WhatsApp
           </a>
         )}
