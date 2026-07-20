@@ -7,6 +7,7 @@ import { useT } from "@/lib/i18n/I18nProvider";
 const CONTACT_EMAIL = "info@megaumka.dev";
 const TELEGRAM_USERNAME = "megaumka_dev_bot";
 const WHATSAPP_NUMBER = "77772681549";
+const PHONE_DISPLAY = "+7 777 268 15 49";
 const WHATSAPP_MESSAGE = "Здравствуйте! Пишу по поводу услуг студии дизайна сайтов megaumka.dev";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -56,6 +57,14 @@ export function Contact() {
     <section id="contact" className="mx-auto max-w-2xl scroll-mt-24 px-6 py-28">
       <Reveal>
         <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.contact.title}</h2>
+      </Reveal>
+      <Reveal delay={0.05} className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-base text-muted">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary">
+          {CONTACT_EMAIL}
+        </a>
+        <a href={`tel:+${WHATSAPP_NUMBER}`} className="hover:text-primary">
+          {PHONE_DISPLAY}
+        </a>
       </Reveal>
       <Reveal delay={0.1} className="mt-4 max-w-lg text-muted">
         {t.contact.lead}

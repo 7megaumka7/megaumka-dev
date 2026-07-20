@@ -12,13 +12,15 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-// Inline, runs before paint (blocking <script> in <head>) - reads localStorage
-// and sets data-theme synchronously so there is no light-then-dark flash.
+// Inline, runs before paint (blocking <script> in <head>) - reads localStorage,
+// falling back to the OS/browser color-scheme preference, and sets data-theme
+// synchronously so there is no light-then-dark flash.
 export const themeAntiFlashScript = `
 (function () {
   try {
     var t = localStorage.getItem("${STORAGE_KEY}");
-    if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    var dark = t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (dark) document.documentElement.setAttribute("data-theme", "dark");
   } catch (e) {}
 })();
 `;
@@ -28,7 +30,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    setTheme(stored === "dark" ? "dark" : "light");
+    if (stored === "dark" || stored === "light") {
+      setTheme(stored);
+      return;
+    }
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    setTheme(media.matches ? "dark" : "light");
+    // No explicit choice saved yet - keep following the OS theme live until
+    // the visitor toggles it manually (that's when we start persisting).
+    const onChange = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
   }, []);
 
   useEffect(() => {
