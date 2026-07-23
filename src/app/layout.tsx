@@ -57,6 +57,8 @@ const jsonLd = {
   address: { "@type": "PostalAddress", addressLocality: "Астана", addressCountry: "KZ" },
   areaServed: ["KZ", "Almaty", "Astana"],
   knowsAbout: ["веб-разработка", "аудит безопасности", "пентест", "Next.js", "UI/UX дизайн"],
+  email: "info@megaumka.dev",
+  telephone: "+77772681549",
   sameAs: [] as string[],
 };
 
@@ -66,6 +68,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="llms.txt" href="/llms.txt" />
         <script dangerouslySetInnerHTML={{ __html: themeAntiFlashScript }} />
         <script
           type="application/ld+json"
