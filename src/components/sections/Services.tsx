@@ -77,6 +77,17 @@ const PRICING_TIERS = [
       "Отчет: что нашли и что починили",
     ],
   },
+  {
+    name: "Индексация и видимость",
+    price: "40 000 ₸",
+    features: [
+      "Sitemap, robots.txt, структурированные данные",
+      "Регистрация в Google Search Console, Bing Webmaster, Яндекс.Вебмастере",
+      "Запрос индексации всех страниц",
+      "llms.txt и разрешения для AI-краулеров",
+      "Для сайтов, сделанных не нами",
+    ],
+  },
 ];
 
 export function Services() {
