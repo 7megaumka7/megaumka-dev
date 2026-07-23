@@ -170,7 +170,7 @@ export function Services() {
         <p className="mt-2 flex items-center gap-1.5 text-sm text-muted">
           <CheckIcon /> {t.services.pricingNote}
         </p>
-        <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {PRICING_TIERS.map((tier) => (
             <div
               key={tier.name}
