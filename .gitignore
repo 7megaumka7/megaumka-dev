@@ -21,3 +21,5 @@ next-env.d.ts
 
 scratch-shots/
 shot*.js
+
+skills-lock.json
