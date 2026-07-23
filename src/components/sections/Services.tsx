@@ -32,6 +32,10 @@ const SERVICE_ITEMS = [
     title: "Моушн и 3D-акценты",
     body: "Добавляем легкую анимацию на интеракциях, вроде карусели проектов на этом сайте, и точечные 3D-сцены на react-three-fiber там, где они реально усиливают продукт. Автоплей-видео ради эффекта не делаем.",
   },
+  {
+    title: "Индексация в Google и видимость для AI-агентов",
+    body: "Настраиваем sitemap, robots.txt и структурированные данные, регистрируем сайт в Google Search Console и Bing Webmaster Tools, добавляем llms.txt и разрешаем AI-краулерам (ChatGPT, Perplexity, Claude) находить и цитировать сайт.",
+  },
 ];
 
 const COMPARISON_ROWS: { criterion: string; us: string; them: string }[] = [
@@ -69,6 +73,7 @@ const PRICING_TIERS = [
       "Ускорение загрузки страниц",
       "Темная тема и мобильный адаптив",
       "Доступность до WCAG AA",
+      "Индексация в Google, Bing и Яндексе",
       "Отчет: что нашли и что починили",
     ],
   },
