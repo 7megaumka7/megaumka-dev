@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 const SITE_URL = "https://megaumka.dev";
 const TITLE = "megaumka.dev: веб-разработка и security-first подход";
 const DESCRIPTION =
-  "megaumka.dev: команда фуллстек-разработчиков и пентестеров с сертификатом OSCP из Астаны. Строим сайты с аудитом безопасности: лендинг, каталог, SaaS. Рабочий e-commerce проект и пять живых demo-лендингов на реальном коде, скриншоты сняты с работающих страниц.";
+  "Веб-студия из Астаны: полный цикл разработки сайтов с аудитом безопасности. Лендинги, каталоги, SaaS. Реальные проекты и живые demo на настоящем коде.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
