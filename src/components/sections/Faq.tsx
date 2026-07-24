@@ -44,18 +44,19 @@ export function Faq() {
 
   return (
     <section id="faq" className="mx-auto max-w-3xl scroll-mt-24 px-6 py-28">
-      {/* floated oval, not gridded - the heading and lead text wrap around its
+      {/* floated circle, not gridded - the heading and lead text wrap around its
           contour, then the accordion resumes full width below the clear.
-          Wide box (not a tight zoom) so both the bear and the question-mark
-          graphic next to it stay in frame - the mark is part of the joke. */}
+          Zoomed OUT (scale < 1) and recentred on the bear+question-mark
+          cluster's centroid, not the image's own centre, so the full mark
+          - not just the bear - stays inside the circular crop. */}
       <Reveal className="hidden float-left mb-4 mr-6 lg:block">
-        <div className="relative h-[210px] w-[300px] overflow-hidden rounded-[50%]">
+        <div className="relative h-[210px] w-[210px] overflow-hidden rounded-full bg-[#f4ede0]">
           <Image
             src="/bear-faq.png"
             alt=""
             fill
             className="object-cover"
-            style={{ transform: "translateY(-4%)" }}
+            style={{ transform: "scale(0.85) translate(-3%, -1%)" }}
             aria-hidden="true"
           />
         </div>

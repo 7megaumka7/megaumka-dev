@@ -15,7 +15,10 @@ const CARBON = "#171717";
 const HAIRLINE = "#212121";
 const CHALK = "#f3f3f3";
 const SMOKE = "#9c9c9c";
-const ROSE = "#d19aa3";
+// Site primary (dark-theme shade) - the highlighted word in the headline is a
+// positive claim ("modern"), so it reads as green (=good) rather than the
+// rose/red-adjacent tone, matching the site's green=good/red=bad convention.
+const GREEN = "#8fbb7c";
 
 // Headline finishes typing at HEADLINE_LENGTH * 32ms; the rest of the
 // terminal content is timed to arrive only after that, so nothing competes
@@ -113,7 +116,7 @@ export function Hero() {
               className="max-w-2xl text-4xl font-bold tracking-tight text-[#f3f3f3] sm:text-6xl"
               prompt="root@megaumka:~$"
               promptColor={SMOKE}
-              highlightColor={ROSE}
+              highlightColor={GREEN}
             />
 
             <Reveal delay={LEAD_DELAY}>
