@@ -10,7 +10,7 @@ import { Footer } from "./Footer";
 // FloatingNav's section anchors don't exist outside the one-page portfolio.
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const standalone = pathname?.startsWith("/demo") || pathname?.startsWith("/blog");
+  const standalone = pathname?.startsWith("/demo") || pathname?.startsWith("/blog") || pathname?.startsWith("/audit");
 
   if (standalone) {
     return <>{children}</>;

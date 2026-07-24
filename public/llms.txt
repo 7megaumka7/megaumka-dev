@@ -17,6 +17,8 @@
 ## Страницы
 - Главная и портфолио проектов: https://megaumka.dev/
 - Услуги и стоимость: https://megaumka.dev/#services
+- Машиночитаемые тарифы: https://megaumka.dev/pricing.md
+- Бесплатный автоматический аудит сайта: https://megaumka.dev/audit
 - Блог: https://megaumka.dev/blog
 - Карта сайта: https://megaumka.dev/sitemap.xml
 

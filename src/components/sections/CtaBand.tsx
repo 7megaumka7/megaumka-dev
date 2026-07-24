@@ -2,6 +2,7 @@
 
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
+import { track } from "@/lib/track";
 
 const CONTACT_EMAIL = "info@megaumka.dev";
 
@@ -24,7 +25,8 @@ function Band() {
       <p className="max-w-xl text-lg text-background/85">{t.ctaBand.subtitle}</p>
       <a
         href={`mailto:${CONTACT_EMAIL}`}
-        className="mt-2 rounded-lg bg-white px-8 py-4 text-base font-semibold text-primary-dim transition duration-200 hover:scale-[1.03] hover:bg-violet-tint hover:text-violet active:scale-[0.97]"
+        onClick={() => track("email_click")}
+        className="mt-2 rounded-lg bg-background px-8 py-4 text-base font-semibold text-primary transition duration-200 hover:scale-[1.03] hover:bg-violet-tint hover:text-violet active:scale-[0.97]"
       >
         {t.ctaBand.button}
       </a>

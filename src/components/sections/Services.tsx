@@ -7,7 +7,7 @@ import { useT } from "@/lib/i18n/I18nProvider";
 // были равны по весу, и глазу не за что зацепиться в первые 3 секунды.
 const HEADLINE_SERVICE = {
   title: "Веб-разработка полного цикла",
-  body: "Одна команда ведет проект от идеи до продакшена: дизайн, фронтенд, бэкенд и деплой. Ничего не теряется при передаче между внешними подрядчиками, потому что подрядчиков нет.",
+  body: "Одна команда ведет проект от идеи до продакшена: дизайн, фронтенд, бэкенд и деплой. То, что обсудили на созвоне, в тот же день попадает в код - пересказывать задачу новому человеку не приходится.",
 };
 
 // Bento layout - варьируем размер ячеек, а не цвет каждой: sage занят заголовочной
@@ -22,11 +22,11 @@ const SERVICE_ITEMS: { title: string; body: string; wide?: boolean; accent?: boo
   },
   {
     title: "Фронтенд-разработка",
-    body: "React/Next.js, доступность интерфейса и производительность входят в приемку по умолчанию, а не идут отдельной опцией.",
+    body: "React/Next.js. Перед сдачей каждый проект проверяем на контраст, клавиатурную навигацию и вес страницы.",
   },
   {
     title: "Бэкенд-разработка",
-    body: "API, базы данных и авторизация с акцентом на безопасность: права проверяются на уровне БД, а не только в роутинге.",
+    body: "API, базы данных, авторизация. Каждый запрос к чужим данным сначала проходит проверку прав на уровне базы.",
   },
   {
     title: "Улучшение существующих сайтов",
@@ -40,7 +40,7 @@ const SERVICE_ITEMS: { title: string; body: string; wide?: boolean; accent?: boo
   },
   {
     title: "Сайты, которые конвертят",
-    body: "UX собирается вокруг одного целевого действия на странице, а не вокруг количества блоков.",
+    body: "UX собирается вокруг одного целевого действия на странице: заявки, звонка, покупки. Всё остальное работает на него.",
     accent: true,
   },
   {
@@ -156,9 +156,6 @@ export function Services() {
         </h3>
         <div className="mt-5 grid gap-0.5 overflow-hidden rounded-2xl sm:grid-cols-2">
           <div className="bg-primary-tint p-6">
-            <p className="mb-3.5 flex items-center gap-2 text-[15px] font-bold text-primary-dim">
-              <CheckIcon /> {t.services.comparisonUs}
-            </p>
             {COMPARISON_ROWS.map((row) => (
               <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
                 <CheckIcon className="text-primary" />
@@ -169,14 +166,14 @@ export function Services() {
               </div>
             ))}
           </div>
-          <div className="bg-surface-2 p-6">
-            <p className="mb-3.5 flex items-center gap-2 text-[15px] font-bold text-muted">
-              <CrossIcon /> {t.services.comparisonThem}
-            </p>
+          {/* danger-tint, not neutral gray: these are the downsides of the
+              other option, and the panel should read as "avoid" at a glance,
+              the same way the left panel reads as "yes" from its green fill */}
+          <div className="bg-danger-tint p-6">
             {COMPARISON_ROWS.map((row) => (
-              <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed text-muted">
-                <CrossIcon />
-                <span className="font-semibold">{row.them}</span>
+              <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
+                <CrossIcon className="text-danger" />
+                <span className="font-semibold text-foreground">{row.them}</span>
               </div>
             ))}
           </div>
@@ -195,13 +192,13 @@ export function Services() {
               className={`flex flex-col p-6 ${tier.highlighted ? "bg-primary text-background" : "bg-surface-2"}`}
             >
               {tier.highlighted && (
-                <span className="mb-2.5 w-fit rounded-full bg-background/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-background">
+                <span className="mb-2.5 w-fit rounded-full bg-primary-dim px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-background">
                   Чаще всего выбирают
                 </span>
               )}
               <h4 className="font-semibold">{tier.name}</h4>
               <p className="mt-2 text-2xl font-bold">
-                <span className={`text-sm font-normal ${tier.highlighted ? "text-background/70" : "text-muted"}`}>
+                <span className={`text-sm font-normal ${tier.highlighted ? "text-background/85" : "text-muted"}`}>
                   {t.services.priceFrom}
                 </span>{" "}
                 {tier.price}

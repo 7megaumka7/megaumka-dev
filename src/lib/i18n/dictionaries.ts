@@ -151,7 +151,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     services: {
       title: "Услуги и стоимость",
-      intro: "Небольшая команда закрывает весь цикл: дизайн, фронтенд, бэкенд и security-ревью. Задачи не гуляют между отделами, потому что отделов нет.",
+      intro: "Небольшая команда сама закрывает весь цикл: дизайн, фронтенд, бэкенд и security-ревью. Один и тот же человек ведет задачу от макета до деплоя.",
       comparisonTitle: "vs типичная студия",
       comparisonUs: "megaumka.dev",
       comparisonThem: "Типичная студия",
@@ -236,7 +236,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     services: {
       title: "Қызметтер мен құны",
-      intro: "Шағын команда толық циклді жабады: дизайн, фронтенд, бэкенд және security-ревью. Тапсырмалар бөлімдер арасында жүрмейді, өйткені бөлімдер жоқ.",
+      intro: "Шағын команда толық циклді өзі жабады: дизайн, фронтенд, бэкенд және security-ревью. Бір адам тапсырманы макеттен деплойға дейін жүргізеді.",
       comparisonTitle: "vs әдеттегі студия",
       comparisonUs: "megaumka.dev",
       comparisonThem: "Әдеттегі студия",
@@ -321,7 +321,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     services: {
       title: "Services & pricing",
-      intro: "A small team covers the whole cycle: design, frontend, backend, and a security review. Tasks don't travel between departments, because there are none.",
+      intro: "A small team covers the whole cycle themselves: design, frontend, backend, and a security review. The same person carries your project from the first mockup to deploy.",
       comparisonTitle: "vs a typical studio",
       comparisonUs: "megaumka.dev",
       comparisonThem: "Typical studio",

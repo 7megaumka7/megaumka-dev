@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
+import { track } from "@/lib/track";
 
 const CONTACT_EMAIL = "info@megaumka.dev";
 const TELEGRAM_USERNAME = "megaumka_dev_bot";
@@ -68,10 +69,10 @@ export function Contact() {
         <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.contact.title}</h2>
       </Reveal>
       <Reveal delay={0.05} className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-base text-muted">
-        <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary" onClick={() => track("email_click")}>
           {CONTACT_EMAIL}
         </a>
-        <a href={`tel:+${WHATSAPP_NUMBER}`} className="hover:text-primary">
+        <a href={`tel:+${WHATSAPP_NUMBER}`} className="hover:text-primary" onClick={() => track("phone_click")}>
           {PHONE_DISPLAY}
         </a>
       </Reveal>
@@ -137,7 +138,7 @@ export function Contact() {
                 </p>
               )}
               {status === "error" && (
-                <p className="text-sm text-red-500" role="status">
+                <p className="text-sm text-danger" role="status">
                   {t.contact.formError}
                 </p>
               )}
@@ -148,6 +149,7 @@ export function Contact() {
             <span className="text-xs text-muted">{t.contact.formOr}</span>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
+              onClick={() => track("email_click")}
               className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
             >
               {CONTACT_EMAIL}
@@ -156,6 +158,7 @@ export function Contact() {
               href={`https://t.me/${TELEGRAM_USERNAME}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("telegram_click")}
               className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
             >
               <TelegramIcon className="h-4 w-4 text-primary" />
@@ -166,7 +169,8 @@ export function Contact() {
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#1ebe5a]"
+                onClick={() => track("whatsapp_click")}
+                className="inline-flex items-center gap-2 rounded-lg bg-[#075E54] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#0d7d6e]"
               >
                 <WhatsAppIcon className="h-4 w-4 text-white" />
                 WhatsApp

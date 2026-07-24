@@ -60,6 +60,7 @@ const jsonLd = {
   knowsAbout: ["веб-разработка", "аудит безопасности", "пентест", "Next.js", "UI/UX дизайн"],
   email: "info@megaumka.dev",
   telephone: "+77772681549",
+  priceRange: "250000-1500000 ₸",
   sameAs: [] as string[],
 };
 

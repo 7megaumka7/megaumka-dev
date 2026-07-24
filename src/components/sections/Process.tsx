@@ -65,7 +65,10 @@ export function Process() {
               className="rounded-xl border border-border bg-surface p-5 transition-colors duration-200 hover:border-violet hover:bg-violet-tint/40"
             >
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-mono text-2xl font-bold text-primary/40">
+                {/* aria-hidden only takes it out of the screen-reader tree - WCAG
+                    contrast still applies to anything visibly rendered, so the
+                    "ghost number" still needs real contrast, not just a low opacity */}
+                <span className="font-mono text-2xl font-bold text-primary/70" aria-hidden="true">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="font-mono text-xs text-muted">{s.duration}</span>
