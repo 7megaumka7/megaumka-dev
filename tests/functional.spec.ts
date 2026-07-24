@@ -4,17 +4,17 @@ test.describe("language switcher", () => {
   test("defaults to ru, switches language, persists across reload", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("аудит");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(/аудит/i);
 
     await page.getByRole("button", { name: "Язык" }).click();
     await page.getByRole("option", { name: "EN" }).click();
 
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("audit");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(/audit/i);
 
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("audit");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(/audit/i);
   });
 
   test("switches to kz (html lang uses the valid BCP-47 'kk' subtag)", async ({ page }) => {
@@ -22,7 +22,7 @@ test.describe("language switcher", () => {
     await page.getByRole("button", { name: "Язык" }).click();
     await page.getByRole("option", { name: "KZ" }).click();
     await expect(page.locator("html")).toHaveAttribute("lang", "kk");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Аудиттен");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(/Аудиттен/i);
   });
 });
 

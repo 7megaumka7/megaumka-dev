@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
 
@@ -55,6 +56,14 @@ export function Contact() {
 
   return (
     <section id="contact" className="mx-auto max-w-2xl scroll-mt-24 px-6 py-28">
+      {/* floated circle, not gridded - heading/contact line/lead text wrap
+          around it, then the form resumes full width below the clear (a
+          fixed-width input grid inside a float would look broken, so the
+          clear happens before the form, not after it). */}
+      <Reveal className="hidden float-right ml-6 mb-4 lg:block">
+        <Image src="/bear-wave.png" alt="" width={170} height={170} className="rounded-full" aria-hidden="true" />
+      </Reveal>
+
       <Reveal>
         <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.contact.title}</h2>
       </Reveal>
@@ -74,94 +83,96 @@ export function Contact() {
         Отвечаем в течение <span className="font-bold text-primary">1</span> рабочего дня
       </Reveal>
 
-      <Reveal delay={0.2} className="mt-8">
-        <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-3">
-          <input
-            type="text"
-            name="website"
-            value={website}
-            onChange={(e) => setWebsite(e.target.value)}
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden="true"
-            className="absolute -left-[9999px] h-0 w-0 opacity-0"
-          />
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(filterName(e.target.value))}
-            placeholder={t.contact.formName}
-            disabled={status === "sending"}
-            className="rounded-lg border border-border bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary-dim disabled:opacity-60"
-          />
-          <input
-            type="text"
-            required
-            value={contact}
-            onChange={(e) => setContact(e.target.value)}
-            placeholder={t.contact.formContact}
-            disabled={status === "sending"}
-            className="rounded-lg border border-border bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary-dim disabled:opacity-60"
-          />
-          <textarea
-            required
-            rows={3}
-            value={message}
-            onChange={(e) => setMessage(filterMessage(e.target.value))}
-            placeholder={t.contact.formMessage}
-            disabled={status === "sending"}
-            className="resize-none rounded-lg border border-border bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary-dim disabled:opacity-60"
-          />
-          <button
-            type="submit"
-            disabled={status === "sending"}
-            className="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-violet hover:text-background disabled:opacity-60"
-          >
-            {status === "sending" ? t.contact.formSending : t.contact.formSubmit}
-          </button>
-          {status === "success" && (
-            <p className="text-sm text-primary" role="status">
-              {t.contact.formSuccess}
-            </p>
-          )}
-          {status === "error" && (
-            <p className="text-sm text-red-500" role="status">
-              {t.contact.formError}
-            </p>
-          )}
-        </form>
-      </Reveal>
+      <div className="clear-both" />
 
-      <Reveal delay={0.25} className="mt-6 flex flex-wrap items-center gap-3">
-        <span className="text-xs text-muted">{t.contact.formOr}</span>
-        <a
-          href={`mailto:${CONTACT_EMAIL}`}
-          className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
-        >
-          {CONTACT_EMAIL}
-        </a>
-        <a
-          href={`https://t.me/${TELEGRAM_USERNAME}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
-        >
-          <TelegramIcon className="h-4 w-4 text-primary" />
-          Telegram
-        </a>
-        {WHATSAPP_NUMBER && (
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#1ebe5a]"
-          >
-            <WhatsAppIcon className="h-4 w-4 text-white" />
-            WhatsApp
-          </a>
-        )}
-      </Reveal>
+      <Reveal delay={0.2} className="mt-8">
+            <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-3">
+              <input
+                type="text"
+                name="website"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(filterName(e.target.value))}
+                placeholder={t.contact.formName}
+                disabled={status === "sending"}
+                className="rounded-lg border border-border bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary-dim disabled:opacity-60"
+              />
+              <input
+                type="text"
+                required
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                placeholder={t.contact.formContact}
+                disabled={status === "sending"}
+                className="rounded-lg border border-border bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary-dim disabled:opacity-60"
+              />
+              <textarea
+                required
+                rows={3}
+                value={message}
+                onChange={(e) => setMessage(filterMessage(e.target.value))}
+                placeholder={t.contact.formMessage}
+                disabled={status === "sending"}
+                className="resize-none rounded-lg border border-border bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary-dim disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-background transition duration-200 hover:bg-violet hover:text-background active:scale-[0.97] disabled:opacity-60"
+              >
+                {status === "sending" ? t.contact.formSending : t.contact.formSubmit}
+              </button>
+              {status === "success" && (
+                <p className="text-sm text-primary" role="status">
+                  {t.contact.formSuccess}
+                </p>
+              )}
+              {status === "error" && (
+                <p className="text-sm text-red-500" role="status">
+                  {t.contact.formError}
+                </p>
+              )}
+            </form>
+          </Reveal>
+
+          <Reveal delay={0.25} className="mt-6 flex flex-wrap items-center gap-3">
+            <span className="text-xs text-muted">{t.contact.formOr}</span>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            <a
+              href={`https://t.me/${TELEGRAM_USERNAME}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary-dim hover:bg-primary-tint"
+            >
+              <TelegramIcon className="h-4 w-4 text-primary" />
+              Telegram
+            </a>
+            {WHATSAPP_NUMBER && (
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#1ebe5a]"
+              >
+                <WhatsAppIcon className="h-4 w-4 text-white" />
+                WhatsApp
+              </a>
+            )}
+          </Reveal>
     </section>
   );
 }

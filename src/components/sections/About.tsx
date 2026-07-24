@@ -1,5 +1,6 @@
 "use client";
 
+import { BearAudit } from "@/components/motion/BearAudit";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
 
@@ -11,10 +12,21 @@ export function About() {
   }
 
   return (
-    <section id="about" className="mx-auto max-w-2xl scroll-mt-24 px-6 py-28">
+    <section id="about" className="mx-auto max-w-3xl scroll-mt-24 px-6 py-28">
       <Reveal>
         <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.about.title}</h2>
       </Reveal>
+
+      {/* floated, not gridded - text wraps around the round silhouette
+          (shape-outside) instead of sitting in a rigid side column, so the
+          page feels less like stacked cards and more like a real layout */}
+      <Reveal
+        delay={0.15}
+        className="float-right ml-6 mb-4 mt-6 w-36 sm:w-48 [shape-outside:circle(48%)]"
+      >
+        <BearAudit className="block h-36 w-36 sm:h-48 sm:w-48" />
+      </Reveal>
+
       <Reveal delay={0.1} className="mt-6 space-y-5 leading-relaxed text-muted">
         <p>
           megaumka.dev началась с пентеста. Основатель студии больше 4 лет в
@@ -42,6 +54,7 @@ export function About() {
           скриншоты и открывающаяся страница.
         </p>
       </Reveal>
+      <div className="clear-both" />
     </section>
   );
 }

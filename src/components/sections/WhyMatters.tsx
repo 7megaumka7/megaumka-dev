@@ -1,8 +1,15 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /*
  * Full-bleed banner after the Hyperstudio reference (styles.refero.design,
@@ -68,35 +75,69 @@ function ReasonIcon({ kind }: { kind: "eye" | "shield" | "bolt" }) {
 // recoloured green→rose to match the site's own palette instead of their
 // monochrome white. Fully transparent background - no fill colour at all -
 // so it sits on the section's obsidian background with zero visible seam in
-// either theme. A slow glow pulse (brighter on hover) is layered on top via
-// drop-shadow, pure CSS, disabled under prefers-reduced-motion.
+// either theme.
+//
+// The artwork itself is untouched: the same image is rendered twice, each
+// copy clip-path-masked to its own half, so the two hands can travel
+// independently. On scroll into view they arrive from opposite edges fully
+// extended (the artwork's own straight-fingered reach), then curl slightly
+// at the wrist on contact - a small rotation/compression pivoted near each
+// hand's base, since a flat halftone image can't articulate individual
+// finger joints. Contact reads as a glow on the hands themselves (no added
+// flare/burst) via a GSAP-driven --glow custom property read by the existing
+// hover filter. GSAP + ScrollTrigger drives it; gsap.matchMedia() skips the
+// whole thing under reduced-motion.
 function DotHands() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const left = leftRef.current;
+    const right = rightRef.current;
+    if (!wrap || !left || !right) return;
+
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(left, { xPercent: -38, autoAlpha: 0, rotation: 0, transformOrigin: "15% 95%" });
+      gsap.set(right, { xPercent: 38, autoAlpha: 0, rotation: 0, transformOrigin: "85% 95%" });
+      gsap.set(wrap, { "--glow": 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: wrap, start: "top 78%", once: true },
+      });
+      tl.to([left, right], { xPercent: 0, autoAlpha: 1, duration: 2.1, ease: "sine.inOut" })
+        // curl: fingers were straight on arrival, now flex slightly at the wrist
+        .to(left, { rotation: 5, scaleY: 0.97, duration: 0.55, ease: "power2.out" }, "-=0.3")
+        .to(right, { rotation: -5, scaleY: 0.97, duration: 0.55, ease: "power2.out" }, "<")
+        .to(wrap, { "--glow": 1, duration: 0.45, ease: "power2.out" }, "-=0.35")
+        .to(wrap, { "--glow": 0.25, duration: 1.1, ease: "power1.out" });
+
+      return () => {
+        tl.kill();
+      };
+    });
+
+    return () => mm.revert();
+  }, []);
+
   return (
-    <div className="hyperstudio-hands w-full" aria-hidden="true">
-      <Image
-        src="/hands-hyperstudio.png"
-        alt=""
-        width={2200}
-        height={639}
-        sizes="100vw"
-        className="h-auto w-full"
-        priority={false}
-        draggable={false}
-      />
+    <div ref={wrapRef} className="hyperstudio-hands relative w-full overflow-hidden" style={{ aspectRatio: "2200 / 639" }} aria-hidden="true">
+      <div ref={leftRef} className="absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+        <Image src="/hands-hyperstudio.png" alt="" fill sizes="100vw" className="object-contain object-left" draggable={false} />
+      </div>
+      <div ref={rightRef} className="absolute inset-0" style={{ clipPath: "inset(0 0 0 50%)" }}>
+        <Image src="/hands-hyperstudio.png" alt="" fill sizes="100vw" className="object-contain object-right" draggable={false} />
+      </div>
       <style>{`
-        .hyperstudio-hands img {
-          animation: hands-glow 3.2s ease-in-out infinite;
+        .hyperstudio-hands {
+          --glow: 0;
+          filter: drop-shadow(0 0 calc(var(--glow) * 12px) ${GREEN}) drop-shadow(0 0 calc(var(--glow) * 12px) ${ROSE});
           transition: filter 0.2s ease;
         }
-        .hyperstudio-hands:hover img {
+        .hyperstudio-hands:hover {
           filter: drop-shadow(0 0 10px ${GREEN}) drop-shadow(0 0 10px ${ROSE});
-        }
-        @keyframes hands-glow {
-          0%, 100% { filter: drop-shadow(0 0 2px rgba(0,0,0,0)); }
-          50% { filter: drop-shadow(0 0 6px ${GREEN}) drop-shadow(0 0 6px ${ROSE}); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hyperstudio-hands img { animation: none; }
         }
       `}</style>
     </div>
@@ -113,7 +154,7 @@ export function WhyMatters() {
   return (
     <section
       aria-label={t.why.title}
-      className="border-y"
+      className="overflow-x-hidden border-y"
       style={{ background: OBSIDIAN, borderColor: HAIRLINE }}
     >
       <div className="mx-auto max-w-[1200px] px-6 pt-20 sm:pt-28">
@@ -160,7 +201,7 @@ export function WhyMatters() {
           <button
             type="button"
             onClick={goToContact}
-            className="rounded-full px-6 py-3 text-sm font-normal uppercase tracking-wide transition-colors hover:bg-[#d19aa3]"
+            className="rounded-full px-6 py-3 text-sm font-normal uppercase tracking-wide transition duration-200 hover:bg-[#d19aa3] active:scale-[0.97]"
             style={{ background: "#ffffff", color: OBSIDIAN }}
           >
             {t.why.cta}

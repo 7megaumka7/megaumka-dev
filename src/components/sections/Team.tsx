@@ -51,27 +51,46 @@ const MEMBERS: {
   },
 ];
 
+// Each member gets a flat-vector initial badge instead of a stock photo - real
+// named people without provided headshots shouldn't get invented faces. Colour
+// cycles through the site's three accents so four cards don't read as one block.
+const AVATAR_ACCENTS = [
+  { bg: "bg-primary-tint", text: "text-primary" },
+  { bg: "bg-violet-tint", text: "text-violet" },
+  { bg: "bg-[#dff3fb]", text: "text-[#2a7fa8]" },
+  { bg: "bg-primary-tint", text: "text-primary" },
+] as const;
+
 export function Team() {
   const t = useT();
 
   return (
-    <section id="team" className="mx-auto max-w-5xl scroll-mt-24 px-6 py-28">
-      <Reveal>
-        <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.team.title}</h2>
-        <p className="mt-3 max-w-2xl text-muted">{t.team.intro}</p>
-      </Reveal>
+    <section id="team" className="scroll-mt-24 border-y border-border bg-surface-2 py-28">
+      <div className="mx-auto max-w-5xl px-6">
+        <Reveal>
+          <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.team.title}</h2>
+          <p className="mt-3 max-w-2xl text-muted">{t.team.intro}</p>
+        </Reveal>
 
-      <Reveal delay={0.1} className="mt-10 grid gap-5 sm:grid-cols-2">
-        {MEMBERS.map((m) => (
-          <article
-            key={m.name}
-            className="flex flex-col rounded-xl border border-border bg-surface p-6 transition-colors duration-200 hover:border-violet hover:bg-violet-tint/40"
-          >
-            <div className="flex items-baseline justify-between gap-3">
-              <h3 className="text-lg font-semibold text-foreground">{m.name}</h3>
-              <span className="shrink-0 font-mono text-xs text-muted">{m.location}</span>
-            </div>
-            <p className="mt-0.5 text-sm font-medium text-primary">{m.role}</p>
+        <Reveal delay={0.1} className="mt-10 grid gap-5 sm:grid-cols-2">
+          {MEMBERS.map((m, i) => (
+            <article
+              key={m.name}
+              className="flex flex-col rounded-xl border border-border bg-surface p-6 transition-colors duration-200 hover:border-violet hover:bg-violet-tint/40"
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-semibold ${AVATAR_ACCENTS[i % AVATAR_ACCENTS.length].bg} ${AVATAR_ACCENTS[i % AVATAR_ACCENTS.length].text}`}
+                  aria-hidden="true"
+                >
+                  {m.name.charAt(0)}
+                </span>
+                <div className="flex flex-1 items-baseline justify-between gap-3">
+                  <h3 className="text-lg font-semibold text-foreground">{m.name}</h3>
+                  <span className="shrink-0 font-mono text-xs text-muted">{m.location}</span>
+                </div>
+              </div>
+              <p className="mt-2 text-sm font-medium text-primary">{m.role}</p>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{m.story}</p>
 
             <div className="mt-5 space-y-2.5">
@@ -96,17 +115,18 @@ export function Team() {
                   {m.security.map((s) => (
                     <span
                       key={s}
-                      className="rounded-md border border-primary-dim/40 bg-primary-tint px-2 py-0.5 font-mono text-xs text-primary-dim"
+                      className="rounded-md border border-primary-dim/40 bg-primary-tint px-2 py-0.5 font-mono text-xs text-primary"
                     >
                       {s}
                     </span>
                   ))}
                 </div>
               )}
-            </div>
-          </article>
-        ))}
-      </Reveal>
+              </div>
+            </article>
+          ))}
+        </Reveal>
+      </div>
     </section>
   );
 }

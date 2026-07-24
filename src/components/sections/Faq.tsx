@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
@@ -43,9 +44,32 @@ export function Faq() {
 
   return (
     <section id="faq" className="mx-auto max-w-3xl scroll-mt-24 px-6 py-28">
+      {/* floated oval, not gridded - the heading and lead text wrap around its
+          contour, then the accordion resumes full width below the clear.
+          Wide box (not a tight zoom) so both the bear and the question-mark
+          graphic next to it stay in frame - the mark is part of the joke. */}
+      <Reveal className="hidden float-left mb-4 mr-6 lg:block">
+        <div className="relative h-[210px] w-[300px] overflow-hidden rounded-[50%]">
+          <Image
+            src="/bear-faq.png"
+            alt=""
+            fill
+            className="object-cover"
+            style={{ transform: "translateY(-4%)" }}
+            aria-hidden="true"
+          />
+        </div>
+      </Reveal>
+
       <Reveal>
         <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.faq.title}</h2>
       </Reveal>
+      <Reveal delay={0.05} className="mt-3 text-muted">
+        Собрали здесь вопросы, которые чаще всего звучат на первом звонке, - чтобы часть из них
+        отпала еще до него.
+      </Reveal>
+
+      <div className="clear-both" />
 
       <Reveal delay={0.1} className="mt-8 divide-y divide-border rounded-xl border border-border bg-surface">
         {ITEMS.map((item, i) => {

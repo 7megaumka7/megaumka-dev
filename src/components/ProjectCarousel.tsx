@@ -107,7 +107,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? { opacity: 1 } : { opacity: 0, x: -16 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="group block w-full rounded-xl border border-border bg-surface p-4 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-violet hover:shadow-md"
+            className="group block w-full rounded-xl border border-border bg-surface p-4 text-left shadow-sm transition duration-200 hover:-translate-y-1 hover:border-violet hover:shadow-md active:scale-[0.99]"
           >
             <ProjectThumbnail project={active} />
             <div className="mt-4 flex items-start justify-between gap-4">

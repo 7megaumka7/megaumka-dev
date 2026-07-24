@@ -111,7 +111,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     nav: { projects: "Проекты", services: "Услуги", faq: "Вопросы", team: "Команда", about: "О студии", contact: "Контакты", blog: "Блог", menu: "Меню" },
     hero: {
       badge: "OSCP · security-first разработка",
-      headline: "Строим современные сайты, которые еще и выдержат аудит.",
+      headline: "Строим современные сайты, которые еще и выдержат аудит",
       highlightWord: "современные",
       lead: "Команда фуллстек-разработчиков и пентестеров. Проектируем и строим сайты под задачу заказчика: рестораны, маркетплейсы, SaaS, корпоративные сервисы. Каждый проект собираем индивидуально, а ниже показываем код и скриншоты живых страниц.",
       ctaProjects: "Смотреть проекты",
@@ -196,7 +196,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     nav: { projects: "Жобалар", services: "Қызметтер", faq: "Сұрақтар", team: "Команда", about: "Студия туралы", contact: "Байланыс", blog: "Блог", menu: "Мәзір" },
     hero: {
       badge: "OSCP · security-first әзірлеу",
-      headline: "Аудиттен өтетін заманауи сайттар жасаймыз.",
+      headline: "Аудиттен өтетін заманауи сайттар жасаймыз",
       highlightWord: "заманауи",
       lead: "Фуллстек-әзірлеушілер мен пентестерлер командасы. Тапсырыс берушінің міндетіне сай сайттар жасаймыз: мейрамханалардан бастап маркетплейс пен SaaS-сервистерге дейін жұмыс істейміз, әр жобаны үлгі бойынша емес, жеке жасаймыз. Төменде макет емес, жұмыс істейтін өнімді көрсетеміз: нақты код және тірі беттерден түсірілген скриншоттар.",
       ctaProjects: "Жобаларды көру",
@@ -281,7 +281,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     nav: { projects: "Projects", services: "Services", faq: "FAQ", team: "Team", about: "Studio", contact: "Contact", blog: "Blog", menu: "Menu" },
     hero: {
       badge: "OSCP · security-first development",
-      headline: "We build modern sites that can survive an audit.",
+      headline: "We build modern sites that can survive an audit",
       highlightWord: "modern",
       lead: "A team of full-stack developers and pentesters. We build sites to the client's brief: we take on restaurants, marketplaces, SaaS, and corporate platforms, and build every project individually instead of from a template. What you see below isn't mockups. It's a working product: real code and screenshots taken from live pages.",
       ctaProjects: "View projects",

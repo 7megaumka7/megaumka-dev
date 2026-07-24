@@ -23,3 +23,6 @@ scratch-shots/
 shot*.js
 
 skills-lock.json
+
+# local-only design inspiration, not for the public repo
+design-references/

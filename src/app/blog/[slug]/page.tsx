@@ -43,7 +43,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <p className="mt-1 text-sm text-muted">Напишите пару строк - оценим объем и сроки бесплатно.</p>
         <Link
           href="/#contact"
-          className="mt-4 inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="mt-4 inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
         >
           Обсудить проект
         </Link>

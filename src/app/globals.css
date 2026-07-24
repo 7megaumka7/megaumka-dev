@@ -25,6 +25,9 @@
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  /* Digital/terminal face for the Kali-styled hero - distinct from the
+     Geist Mono used for stack/security tag badges site-wide. */
+  --font-terminal: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 :root {

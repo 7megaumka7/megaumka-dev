@@ -20,11 +20,11 @@ function Band() {
   const t = useT();
   return (
     <Reveal className="mx-auto flex min-h-[50svh] max-w-5xl flex-col items-center justify-center gap-6 px-6 py-20 text-center">
-      <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">{t.ctaBand.title}</h2>
-      <p className="max-w-xl text-lg text-white/85">{t.ctaBand.subtitle}</p>
+      <h2 className="text-4xl font-bold tracking-tight text-background sm:text-6xl">{t.ctaBand.title}</h2>
+      <p className="max-w-xl text-lg text-background/85">{t.ctaBand.subtitle}</p>
       <a
         href={`mailto:${CONTACT_EMAIL}`}
-        className="mt-2 rounded-lg bg-white px-8 py-4 text-base font-semibold text-primary-dim transition-all duration-200 hover:scale-[1.03] hover:bg-violet-tint hover:text-violet"
+        className="mt-2 rounded-lg bg-white px-8 py-4 text-base font-semibold text-primary-dim transition duration-200 hover:scale-[1.03] hover:bg-violet-tint hover:text-violet active:scale-[0.97]"
       >
         {t.ctaBand.button}
       </a>

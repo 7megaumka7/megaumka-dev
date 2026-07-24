@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
 
@@ -42,29 +43,39 @@ export function Process() {
   const t = useT();
 
   return (
-    <section id="process" className="mx-auto max-w-5xl scroll-mt-24 px-6 py-28">
-      <Reveal>
-        <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.process.title}</h2>
-        <p className="mt-3 max-w-2xl text-muted">{t.process.intro}</p>
-      </Reveal>
+    <section id="process" className="scroll-mt-24 bg-primary-tint/40 py-28">
+      <div className="mx-auto max-w-5xl px-6">
+        {/* floated square, not gridded - the intro text wraps around it, then
+            the cards grid resumes full width below the clear */}
+        <Reveal delay={0.15} className="hidden float-right ml-6 mb-4 lg:block">
+          <Image src="/bear-process.png" alt="" width={200} height={200} className="rounded-2xl" aria-hidden="true" />
+        </Reveal>
 
-      <Reveal delay={0.1} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {STEPS.map((s, i) => (
-          <div
-            key={s.title}
-            className="rounded-xl border border-border bg-surface p-5 transition-colors duration-200 hover:border-violet hover:bg-violet-tint/40"
-          >
-            <div className="flex items-baseline justify-between gap-3">
-              <span className="font-mono text-2xl font-bold text-primary/40">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="font-mono text-xs text-muted">{s.duration}</span>
+        <Reveal>
+          <h2 className="text-3xl font-semibold tracking-tight text-primary">{t.process.title}</h2>
+          <p className="mt-3 max-w-2xl text-muted">{t.process.intro}</p>
+        </Reveal>
+
+        <div className="clear-both" />
+
+        <Reveal delay={0.1} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {STEPS.map((s, i) => (
+            <div
+              key={s.title}
+              className="rounded-xl border border-border bg-surface p-5 transition-colors duration-200 hover:border-violet hover:bg-violet-tint/40"
+            >
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-mono text-2xl font-bold text-primary/40">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="font-mono text-xs text-muted">{s.duration}</span>
+              </div>
+              <h3 className="mt-2 font-semibold text-foreground">{s.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.body}</p>
             </div>
-            <h3 className="mt-2 font-semibold text-foreground">{s.title}</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.body}</p>
-          </div>
-        ))}
-      </Reveal>
+          ))}
+        </Reveal>
+      </div>
     </section>
   );
 }

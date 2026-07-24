@@ -14,6 +14,7 @@ for (const { option } of locales) {
       await page.getByRole("button", { name: "Язык" }).click();
       await page.getByRole("option", { name: option }).click();
     }
+    await page.waitForTimeout(4500); // let the hero's terminal typing + staggered reveals settle before sampling colors
     const results = await new AxeBuilder({ page }).analyze();
     const serious = results.violations.filter((v) => v.impact === "critical" || v.impact === "serious");
     expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
@@ -23,6 +24,7 @@ for (const { option } of locales) {
 test("no critical/serious a11y violations - dark theme", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /темная тема/i }).click();
+  await page.waitForTimeout(4500); // let the hero's terminal typing + staggered reveals settle before sampling colors
   const results = await new AxeBuilder({ page }).analyze();
   const serious = results.violations.filter((v) => v.impact === "critical" || v.impact === "serious");
   expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);

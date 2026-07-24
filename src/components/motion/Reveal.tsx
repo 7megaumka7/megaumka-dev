@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -12,11 +12,13 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  style,
   as: Component = motion.div,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  style?: CSSProperties;
   as?: typeof motion.div | typeof motion.span | typeof motion.h1;
 }) {
   const reduce = useReducedMotion();
@@ -24,6 +26,7 @@ export function Reveal({
   return (
     <Component
       className={className}
+      style={style}
       initial={reduce ? undefined : "hidden"}
       whileInView={reduce ? undefined : "show"}
       viewport={{ once: true, margin: "-80px" }}

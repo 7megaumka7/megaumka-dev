@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/SiteChrome";
 import { Spotlight } from "@/components/motion/Spotlight";
@@ -8,6 +8,7 @@ import { I18nProvider } from "@/lib/i18n/I18nProvider";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "cyrillic"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const jetbrainsMono = JetBrains_Mono({ variable: "--font-jetbrains-mono", subsets: ["latin"] });
 
 const SITE_URL = "https://megaumka.dev";
 const TITLE = "megaumka.dev: веб-разработка и security-first подход";
@@ -66,7 +67,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         <link rel="llms.txt" href="/llms.txt" />
         <script dangerouslySetInnerHTML={{ __html: themeAntiFlashScript }} />

@@ -3,45 +3,57 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
 
-const SERVICE_ITEMS = [
-  {
-    title: "Веб-разработка полного цикла",
-    body: "Один человек ведет проект от идеи до продакшена: дизайн, фронтенд, бэкенд и деплой. Ничего не теряется при передаче между специалистами.",
-  },
+// Одна услуга задает визуальную доминанту раздела - без неё все 7 карточек
+// были равны по весу, и глазу не за что зацепиться в первые 3 секунды.
+const HEADLINE_SERVICE = {
+  title: "Веб-разработка полного цикла",
+  body: "Одна команда ведет проект от идеи до продакшена: дизайн, фронтенд, бэкенд и деплой. Ничего не теряется при передаче между внешними подрядчиками, потому что подрядчиков нет.",
+};
+
+// Bento layout - варьируем размер ячеек, а не цвет каждой: sage занят заголовочной
+// карточкой (единственный сильный акцент раздела), rose/violet маркирует только одну
+// смысловую группу - услуги, которые реально отличают от конкурентов. Остальные
+// ячейки нейтральные, без рамок: деление идет заливкой и gap, а не border-клетками.
+const SERVICE_ITEMS: { title: string; body: string; wide?: boolean; accent?: boolean }[] = [
   {
     title: "UI/UX дизайн",
     body: "Интерфейсы, которые не нужно объяснять пользователю: понятная иерархия, читаемая типографика, честная обратная связь на каждое действие.",
+    wide: true,
   },
   {
     title: "Фронтенд-разработка",
-    body: "React/Next.js, доступность интерфейса и производительность входят в приемку по умолчанию, а не идут отдельной опцией: контраст, клавиатурная навигация, бюджет на бандл.",
+    body: "React/Next.js, доступность интерфейса и производительность входят в приемку по умолчанию, а не идут отдельной опцией.",
   },
   {
     title: "Бэкенд-разработка",
-    body: "Проектируем API, базы данных и авторизацию с акцентом на оптимизацию и безопасность по лучшим практикам: права проверяются на уровне БД, а не только в роутинге.",
+    body: "API, базы данных и авторизация с акцентом на безопасность: права проверяются на уровне БД, а не только в роутинге.",
   },
   {
     title: "Улучшение существующих сайтов",
-    body: "Проводим аудит, редизайн и добавляем функциональность без переписывания всего с нуля: меняем точечно, там, где это реально нужно.",
-  },
-  {
-    title: "Сайты, которые конвертят",
-    body: "UX собирается вокруг одного целевого действия на странице, а не вокруг количества блоков. Чем меньше кликов до заявки, тем больше заявок с того же трафика.",
+    body: "Проводим аудит, редизайн и добавляем функциональность без переписывания всего с нуля.",
   },
   {
     title: "Моушн и 3D-акценты",
-    body: "Добавляем легкую анимацию на интеракциях, вроде карусели проектов на этом сайте, и точечные 3D-сцены на react-three-fiber там, где они реально усиливают продукт. Автоплей-видео ради эффекта не делаем.",
+    body: "Легкая анимация на интеракциях и точечные 3D-сцены - то, что клиент замечает первым и запоминает дольше всего.",
+    wide: true,
+    accent: true,
   },
   {
-    title: "Индексация в Google и видимость для AI-агентов",
-    body: "Настраиваем sitemap, robots.txt и структурированные данные, регистрируем сайт в Google Search Console и Bing Webmaster Tools, добавляем llms.txt и разрешаем AI-краулерам (ChatGPT, Perplexity, Claude) находить и цитировать сайт.",
+    title: "Сайты, которые конвертят",
+    body: "UX собирается вокруг одного целевого действия на странице, а не вокруг количества блоков.",
+    accent: true,
+  },
+  {
+    title: "Видимость для Google и AI-агентов",
+    body: "Sitemap, структурированные данные, регистрация в вебмастерах, llms.txt для ChatGPT, Perplexity, Claude.",
+    wide: true,
+    accent: true,
   },
 ];
 
 const COMPARISON_ROWS: { criterion: string; us: string; them: string }[] = [
   { criterion: "Security-ревью", us: "включено по умолчанию", them: "отдельная платная опция" },
   { criterion: "Авторизация", us: "проверяется на уровне базы данных", them: "только в роутинге приложения" },
-  { criterion: "Маркировка кейсов", us: "рабочие и концепт честно разделены", them: "только «истории успеха»" },
   { criterion: "Доступность интерфейса", us: "WCAG AA из коробки", them: "по отдельному запросу" },
   { criterion: "Темная/светлая тема", us: "есть везде", them: "часто отсутствует" },
   { criterion: "Контакт", us: "напрямую с разработчиком", them: "через менеджера-прослойку" },
@@ -64,29 +76,21 @@ const PRICING_TIERS = [
     price: "1 500 000 ₸",
     features: ["Сложная бизнес-логика", "Авторизация и роли", "Интеграция с оплатой", "Security-ревью", "Поддержка после сдачи"],
   },
+];
+
+// Не следующая ступень тарифной лестницы, а другая категория услуги - для сайтов,
+// сделанных не нами. Одна компактная полоса вместо двух полноразмерных карточек,
+// чтобы не спорить весом с основными тарифами.
+const SECONDARY_SERVICES = [
   {
     name: "Улучшение действующего сайта",
     price: "120 000 ₸",
-    features: [
-      "Аудит дизайна и безопасности",
-      "Точечный редизайн без переписывания",
-      "Ускорение загрузки страниц",
-      "Темная тема и мобильный адаптив",
-      "Доступность до WCAG AA",
-      "Индексация в Google, Bing и Яндексе",
-      "Отчет: что нашли и что починили",
-    ],
+    description: "Аудит, точечный редизайн, скорость, доступность - без переписывания всего проекта.",
   },
   {
     name: "Индексация и видимость",
     price: "40 000 ₸",
-    features: [
-      "Sitemap, robots.txt, структурированные данные",
-      "Регистрация в Google Search Console, Bing Webmaster, Яндекс.Вебмастере",
-      "Запрос индексации всех страниц",
-      "llms.txt и разрешения для AI-краулеров",
-      "Для сайтов, сделанных не нами",
-    ],
+    description: "Заводим сайт в Google, Bing и Яндекс и открываем его для AI-агентов.",
   },
 ];
 
@@ -104,64 +108,78 @@ export function Services() {
         <p className="mt-3 max-w-2xl text-muted">{t.services.intro}</p>
       </Reveal>
 
-      <Reveal delay={0.1} className="mt-10 grid gap-4 sm:grid-cols-2">
+      {/* headline card owns full-strength sage - the section's one anchor color.
+          text-background (not text-white): dark-mode primary is a light green
+          meant to be read as text, not filled under white - same contrast bug
+          class fixed earlier in Hero/CtaBand this session. */}
+      <Reveal delay={0.1} className="mt-10">
+        <div className="rounded-2xl bg-primary p-6 text-background sm:p-8">
+          <h3 className="text-2xl font-semibold">{HEADLINE_SERVICE.title}</h3>
+          <p className="mt-2 max-w-2xl leading-relaxed text-background/85">{HEADLINE_SERVICE.body}</p>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.12} className="mt-1 grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICE_ITEMS.map((item) => (
           <div
             key={item.title}
-            className="rounded-xl border border-border bg-surface p-5 transition-colors duration-200 hover:border-violet hover:bg-violet-tint"
+            className={`rounded-xl p-4 transition-colors duration-200 ${
+              item.wide ? "sm:col-span-2" : ""
+            } ${item.accent ? "bg-violet-tint" : "bg-surface-2"}`}
           >
-            <h3 className="font-semibold text-foreground">{item.title}</h3>
+            {item.accent && (
+              <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-widest text-violet">
+                Отличает от конкурентов
+              </span>
+            )}
+            <h3 className={`text-sm font-semibold ${item.accent ? "text-violet" : "text-foreground"}`}>
+              {item.title}
+            </h3>
             <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
           </div>
         ))}
       </Reveal>
 
-      {/* honest anti-list - the focus statement top agencies imply, said out loud.
-          Narrow scope reads as expertise, not as a gap. */}
-      <Reveal delay={0.12} className="mt-6 rounded-xl border border-dashed border-border bg-surface-2/50 p-5">
-        <h3 className="font-semibold text-foreground">Чего мы не делаем</h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-muted">
-          SMM, контекстную рекламу и брендбуки с миссией компании. Это отдельные профессии,
-          и делать их «заодно» было бы халтурой. Если вам это нужно, честно скажем и
-          подскажем, у кого заказать.
-        </p>
+      {/* honest anti-list as plain text, not another bordered box - narrow scope
+          reads as expertise, and one fewer box keeps the section from piling up */}
+      <Reveal delay={0.16} className="mt-4 text-sm leading-relaxed text-muted">
+        <span className="font-semibold text-foreground">Чего мы не делаем:</span> SMM, контекстную рекламу и
+        брендбуки с миссией компании. Это отдельные профессии, и делать их «заодно» было бы халтурой. Если вам
+        это нужно, честно скажем и подскажем, у кого заказать.
       </Reveal>
 
+      {/* comparison as two colored panels, not a striped table - the verdict
+          reads instantly from the fill, not from parsing rows */}
       <Reveal delay={0.15} className="mt-16">
         <h3 className="text-xl font-semibold text-foreground">
           <span className="text-primary">{t.services.comparisonUs}</span> {t.services.comparisonTitle}
         </h3>
-        <div className="mt-5 overflow-hidden rounded-xl border border-border">
-          {/* header row - column labels only make sense once rows are actually side-by-side */}
-          <div className="hidden bg-surface-2 text-xs font-semibold uppercase tracking-wide text-muted sm:grid sm:grid-cols-[1.2fr_1fr_1fr]">
-            <div className="px-4 py-3" />
-            <div className="px-4 py-3 text-primary">{t.services.comparisonUs}</div>
-            <div className="px-4 py-3">{t.services.comparisonThem}</div>
-          </div>
-          {COMPARISON_ROWS.map((row, i) => (
-            <div
-              key={row.criterion}
-              className={`grid grid-cols-1 gap-1 px-4 py-3 text-sm transition-colors duration-200 hover:bg-violet-tint sm:grid-cols-[1.2fr_1fr_1fr] sm:gap-0 sm:px-0 sm:py-0 ${
-                i % 2 === 1 ? "bg-surface-2/50" : "bg-surface"
-              }`}
-            >
-              <div className="font-medium text-foreground sm:px-4 sm:py-3">{row.criterion}</div>
-              <div className="flex items-start gap-1.5 text-foreground sm:px-4 sm:py-3">
-                <CheckIcon />{" "}
+        <div className="mt-5 grid gap-0.5 overflow-hidden rounded-2xl sm:grid-cols-2">
+          <div className="bg-primary-tint p-6">
+            <p className="mb-3.5 flex items-center gap-2 text-[15px] font-bold text-primary-dim">
+              <CheckIcon /> {t.services.comparisonUs}
+            </p>
+            {COMPARISON_ROWS.map((row) => (
+              <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
+                <CheckIcon className="text-primary" />
                 <span>
-                  <span className="text-primary sm:hidden">{t.services.comparisonUs}: </span>
+                  <span className="block font-semibold text-foreground">{row.criterion}</span>
                   {row.us}
                 </span>
               </div>
-              <div className="flex items-start gap-1.5 text-muted sm:px-4 sm:py-3">
-                <CrossIcon />{" "}
-                <span>
-                  <span className="sm:hidden">{t.services.comparisonThem}: </span>
-                  {row.them}
-                </span>
+            ))}
+          </div>
+          <div className="bg-surface-2 p-6">
+            <p className="mb-3.5 flex items-center gap-2 text-[15px] font-bold text-muted">
+              <CrossIcon /> {t.services.comparisonThem}
+            </p>
+            {COMPARISON_ROWS.map((row) => (
+              <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed text-muted">
+                <CrossIcon />
+                <span className="font-semibold">{row.them}</span>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </Reveal>
 
@@ -170,19 +188,25 @@ export function Services() {
         <p className="mt-2 flex items-center gap-1.5 text-sm text-muted">
           <CheckIcon /> {t.services.pricingNote}
         </p>
-        <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-5 grid gap-0.5 overflow-hidden rounded-2xl sm:grid-cols-3">
           {PRICING_TIERS.map((tier) => (
             <div
               key={tier.name}
-              className={`flex flex-col rounded-xl border p-6 transition-colors duration-200 hover:border-violet ${
-                tier.highlighted ? "border-primary-dim bg-primary-tint" : "border-border bg-surface"
-              }`}
+              className={`flex flex-col p-6 ${tier.highlighted ? "bg-primary text-background" : "bg-surface-2"}`}
             >
-              <h4 className="font-semibold text-foreground">{tier.name}</h4>
-              <p className="mt-2 text-2xl font-bold text-foreground">
-                <span className="text-sm font-normal text-muted">{t.services.priceFrom}</span> {tier.price}
+              {tier.highlighted && (
+                <span className="mb-2.5 w-fit rounded-full bg-background/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-background">
+                  Чаще всего выбирают
+                </span>
+              )}
+              <h4 className="font-semibold">{tier.name}</h4>
+              <p className="mt-2 text-2xl font-bold">
+                <span className={`text-sm font-normal ${tier.highlighted ? "text-background/70" : "text-muted"}`}>
+                  {t.services.priceFrom}
+                </span>{" "}
+                {tier.price}
               </p>
-              <ul className="mt-4 flex-1 space-y-2 text-sm text-muted">
+              <ul className={`mt-4 flex-1 space-y-2 text-sm ${tier.highlighted ? "text-background/90" : "text-muted"}`}>
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-1.5">
                     <CheckIcon /> <span>{f}</span>
@@ -192,13 +216,39 @@ export function Services() {
               <button
                 type="button"
                 onClick={goToContact}
-                className={`mt-6 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors duration-200 ${
+                className={`mt-6 rounded-lg px-4 py-2.5 text-sm font-medium transition duration-200 active:scale-[0.97] ${
                   tier.highlighted
-                    ? "bg-primary text-white hover:bg-violet hover:text-background"
+                    ? "bg-background text-primary hover:opacity-90"
                     : "border border-border text-foreground hover:border-violet hover:bg-violet-tint"
                 }`}
               >
                 {t.services.ctaOrder}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-2 rounded-2xl border border-dashed border-border">
+          <p className="px-5 pt-3 text-xs font-semibold uppercase tracking-wide text-muted">Не новый сайт с нуля?</p>
+          {SECONDARY_SERVICES.map((s, i) => (
+            <div
+              key={s.name}
+              className={`flex flex-col items-start justify-between gap-2 px-5 py-4 sm:flex-row sm:items-center sm:gap-4 ${
+                i > 0 ? "border-t border-border" : ""
+              }`}
+            >
+              <div>
+                <h4 className="font-semibold text-foreground">
+                  {s.name} <span className="font-normal text-muted">от {s.price}</span>
+                </h4>
+                <p className="mt-0.5 max-w-md text-sm text-muted">{s.description}</p>
+              </div>
+              <button
+                type="button"
+                onClick={goToContact}
+                className="shrink-0 text-sm font-medium text-primary transition-colors hover:text-violet"
+              >
+                {t.services.ctaOrder} →
               </button>
             </div>
           ))}
@@ -208,17 +258,17 @@ export function Services() {
   );
 }
 
-function CheckIcon() {
+function CheckIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" className="mt-0.5 h-4 w-4 shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 20 20" className={`mt-0.5 h-4 w-4 shrink-0 text-primary ${className}`} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 10l4 4 8-8" />
     </svg>
   );
 }
 
-function CrossIcon() {
+function CrossIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" className="mt-0.5 h-4 w-4 shrink-0 text-muted" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 20 20" className={`mt-0.5 h-4 w-4 shrink-0 text-muted ${className}`} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5 5l10 10M15 5L5 15" />
     </svg>
   );

@@ -63,7 +63,7 @@ export function FloatingNav() {
 
   return (
     <header className="fixed inset-x-0 top-4 z-40 flex flex-col items-center px-4">
-      <div className="flex w-full max-w-4xl items-center gap-2 rounded-full border border-border/80 bg-background/85 px-3 py-2 shadow-sm backdrop-blur">
+      <div className="flex w-full max-w-4xl items-center gap-2 rounded-full border border-border/80 bg-background/95 px-3 py-2 shadow-sm backdrop-blur">
         <button
           type="button"
           onClick={() => goTo("hero")}
