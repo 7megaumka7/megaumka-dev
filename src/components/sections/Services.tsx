@@ -1,7 +1,25 @@
 "use client";
 
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import { useT } from "@/lib/i18n/I18nProvider";
+
+// Shared stagger for card grids - children pop in one after another instead
+// of all at once, which reads as "alive" without any single element being loud.
+const gridContainer: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.07 } } };
+const gridItem: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] } },
+};
+const hoverLift = { y: -4, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] as const } };
+const rowFromLeft: Variants = {
+  hidden: { opacity: 0, x: -12 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.4, 0, 0.2, 1] } },
+};
+const rowFromRight: Variants = {
+  hidden: { opacity: 0, x: 12 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.4, 0, 0.2, 1] } },
+};
 
 // Одна услуга задает визуальную доминанту раздела - без неё все 7 карточек
 // были равны по весу, и глазу не за что зацепиться в первые 3 секунды.
@@ -96,6 +114,7 @@ const SECONDARY_SERVICES = [
 
 export function Services() {
   const t = useT();
+  const reduce = useReducedMotion();
 
   function goToContact() {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -119,13 +138,21 @@ export function Services() {
         </div>
       </Reveal>
 
-      <Reveal delay={0.12} className="mt-1 grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        className="mt-1 grid gap-1 sm:grid-cols-2 lg:grid-cols-3"
+        initial={reduce ? undefined : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, margin: "-60px" }}
+        variants={gridContainer}
+      >
         {SERVICE_ITEMS.map((item) => (
-          <div
+          <motion.div
             key={item.title}
-            className={`rounded-xl p-4 transition-colors duration-200 ${
+            variants={gridItem}
+            whileHover={reduce ? undefined : hoverLift}
+            className={`rounded-xl p-4 transition-colors duration-200 hover:shadow-lg ${
               item.wide ? "sm:col-span-2" : ""
-            } ${item.accent ? "bg-violet-tint" : "bg-surface-2"}`}
+            } ${item.accent ? "bg-violet-tint hover:bg-violet-tint/80" : "bg-surface-2"}`}
           >
             {item.accent && (
               <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-widest text-violet">
@@ -136,9 +163,9 @@ export function Services() {
               {item.title}
             </h3>
             <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
-          </div>
+          </motion.div>
         ))}
-      </Reveal>
+      </motion.div>
 
       {/* honest anti-list as plain text, not another bordered box - narrow scope
           reads as expertise, and one fewer box keeps the section from piling up */}
@@ -155,28 +182,40 @@ export function Services() {
           <span className="text-primary">{t.services.comparisonUs}</span> {t.services.comparisonTitle}
         </h3>
         <div className="mt-5 grid gap-0.5 overflow-hidden rounded-2xl sm:grid-cols-2">
-          <div className="bg-primary-tint p-6">
+          <motion.div
+            className="bg-primary-tint p-6"
+            initial={reduce ? undefined : "hidden"}
+            whileInView={reduce ? undefined : "show"}
+            viewport={{ once: true, margin: "-60px" }}
+            variants={gridContainer}
+          >
             {COMPARISON_ROWS.map((row) => (
-              <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
+              <motion.div key={row.criterion} variants={rowFromLeft} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
                 <CheckIcon className="text-primary" />
                 <span>
                   <span className="block font-semibold text-foreground">{row.criterion}</span>
                   {row.us}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           {/* danger-tint, not neutral gray: these are the downsides of the
               other option, and the panel should read as "avoid" at a glance,
               the same way the left panel reads as "yes" from its green fill */}
-          <div className="bg-danger-tint p-6">
+          <motion.div
+            className="bg-danger-tint p-6"
+            initial={reduce ? undefined : "hidden"}
+            whileInView={reduce ? undefined : "show"}
+            viewport={{ once: true, margin: "-60px" }}
+            variants={gridContainer}
+          >
             {COMPARISON_ROWS.map((row) => (
-              <div key={row.criterion} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
+              <motion.div key={row.criterion} variants={rowFromRight} className="flex gap-2 py-2 text-[13.5px] leading-relaxed">
                 <CrossIcon className="text-danger" />
                 <span className="font-semibold text-foreground">{row.them}</span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </Reveal>
 
@@ -185,10 +224,18 @@ export function Services() {
         <p className="mt-2 flex items-center gap-1.5 text-sm text-muted">
           <CheckIcon /> {t.services.pricingNote}
         </p>
-        <div className="mt-5 grid gap-0.5 overflow-hidden rounded-2xl sm:grid-cols-3">
+        <motion.div
+          className="mt-5 grid gap-0.5 overflow-hidden rounded-2xl sm:grid-cols-3"
+          initial={reduce ? undefined : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={{ once: true, margin: "-60px" }}
+          variants={gridContainer}
+        >
           {PRICING_TIERS.map((tier) => (
-            <div
+            <motion.div
               key={tier.name}
+              variants={gridItem}
+              whileHover={reduce ? undefined : { y: -6, transition: hoverLift.transition }}
               className={`flex flex-col p-6 ${tier.highlighted ? "bg-primary text-background" : "bg-surface-2"}`}
             >
               {tier.highlighted && (
@@ -210,20 +257,21 @@ export function Services() {
                   </li>
                 ))}
               </ul>
-              <button
+              <motion.button
                 type="button"
                 onClick={goToContact}
-                className={`mt-6 rounded-lg px-4 py-2.5 text-sm font-medium transition duration-200 active:scale-[0.97] ${
+                whileTap={reduce ? undefined : { scale: 0.97 }}
+                className={`mt-6 rounded-lg px-4 py-2.5 text-sm font-medium transition duration-200 ${
                   tier.highlighted
                     ? "bg-background text-primary hover:opacity-90"
                     : "border border-border text-foreground hover:border-violet hover:bg-violet-tint"
                 }`}
               >
                 {t.services.ctaOrder}
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="mt-2 rounded-2xl border border-dashed border-border">
           <p className="px-5 pt-3 text-xs font-semibold uppercase tracking-wide text-muted">Не новый сайт с нуля?</p>
@@ -243,9 +291,10 @@ export function Services() {
               <button
                 type="button"
                 onClick={goToContact}
-                className="shrink-0 text-sm font-medium text-primary transition-colors hover:text-violet"
+                className="group shrink-0 text-sm font-medium text-primary transition-colors hover:text-violet"
               >
-                {t.services.ctaOrder} →
+                {t.services.ctaOrder}{" "}
+                <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
               </button>
             </div>
           ))}
